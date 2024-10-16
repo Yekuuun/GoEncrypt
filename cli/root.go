@@ -12,6 +12,8 @@ import (
 var rootCmd = &cobra.Command{
 	Use:          "goencrypt",
 	SilenceUsage: true,
+	Short:        "A simple file encryption tool",
+	Long:         "This tool provides functionalities to encrypt files on your system.",
 }
 
 var MainContext context.Context

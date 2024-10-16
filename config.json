@@ -1,0 +1,18 @@
+{
+    "app": {
+        "name":"GoEncrypt",
+        "description": "a simple cli encryption tool"
+    },
+    "security": {
+        "rsaKeySize": 2048,
+        "aesKeySize": 256,
+        "passwordIterations": 10000,
+        "saltSize": 16,
+        "ivSize": 16
+    },
+    "paths": {
+        "keyStorage": "/keys/",
+        "encryptedFiles": "/encrypted/files/",
+        "logs": "/logs/"
+    }
+}

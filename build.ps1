@@ -1,8 +1,7 @@
 # build.ps1
 
 $projectName = "GoEncrypt" 
-$buildDir = "build"                          
-$sourceDir = "cmd"                          
+$buildDir = "build"                                                
 $outputFile = "$buildDir\$projectName.exe" 
 
 # Verifier si Go est install
@@ -19,7 +18,7 @@ if (-not (Test-Path $buildDir)) {
 # Fonction pour construire le projet
 function BuildCode {
     Write-Host "Compilation de l'application..."
-    & go build -o $outputFile "$sourceDir\main.go"
+    & go build -o $outputFile "main.go"
 
     if ($LASTEXITCODE -eq 0) {
         Write-Host "Compilation reussie : $outputFile"

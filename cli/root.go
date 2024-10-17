@@ -66,6 +66,7 @@ func Execute() {
 	fmt.Printf("\n\n")
 }
 
+// initial config checker.
 func InitialConfig() (bool, error) {
 	containsKeys, err := utils.ContainsKeys()
 	if err != nil {
@@ -87,7 +88,7 @@ func InitialConfig() (bool, error) {
 			return false, errSaveKeys
 		}
 
-		fmt.Println("\n------------------------------------------")
+		fmt.Printf("\n------------------------------------------")
 		fmt.Println("Keys successfuly generated in /data/keys !")
 
 		return true, nil

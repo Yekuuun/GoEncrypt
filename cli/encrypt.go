@@ -2,6 +2,7 @@ package cli
 
 import (
 	"GoEncrypt/pkg/cypher"
+	"GoEncrypt/pkg/logs"
 	"GoEncrypt/pkg/utils"
 	"crypto/rand"
 	"fmt"
@@ -48,11 +49,14 @@ func RunEncryption(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("[!] ERROR : error uploading new encrypted file")
 	}
 
+	logs.WriteLogs("[ENCRYPTION] : encrypted new file : " + outputFilePath)
+
 	fmt.Println("\n------------------------")
 	fmt.Println("File succesffuly encrypted")
 	return nil
 }
 
+// init cmd for encrypt command
 func init() {
 	CmdEncrypt = &cobra.Command{
 		Use:   "encrypt",

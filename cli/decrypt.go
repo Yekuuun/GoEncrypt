@@ -2,6 +2,7 @@ package cli
 
 import (
 	"GoEncrypt/pkg/cypher"
+	"GoEncrypt/pkg/logs"
 	"GoEncrypt/pkg/utils"
 	"fmt"
 	"os"
@@ -45,12 +46,15 @@ func RunDecrypt(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("[!] ERROR : no file path founded")
 	}
 
+	logs.WriteLogs("[DECRYPT] : decrypt file : " + filePath)
+
 	fmt.Println("\n\n-------------------------")
 	fmt.Println("File successullfy decyphered.")
 	fmt.Printf("New file : %s", outputPath)
 	return nil
 }
 
+// decrypt cmd.
 func init() {
 	CmdDecrypt = &cobra.Command{
 		Use:   "decrypt",

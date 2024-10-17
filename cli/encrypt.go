@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var CmdDir *cobra.Command
+var CmdEncrypt *cobra.Command
 
 // running file encryption
 func RunEncryption(cmd *cobra.Command, args []string) error {
@@ -54,14 +54,14 @@ func RunEncryption(cmd *cobra.Command, args []string) error {
 }
 
 func init() {
-	CmdDir = &cobra.Command{
+	CmdEncrypt = &cobra.Command{
 		Use:   "encrypt",
 		Short: "Encrypt a given file using it's path",
 		RunE:  RunEncryption,
 	}
 
-	CmdDir.Flags().StringP("file", "f", "", "Path to the file to encrypt")
-	CmdDir.MarkFlagRequired("file")
+	CmdEncrypt.Flags().StringP("file", "f", "", "Path to the file to encrypt")
+	CmdEncrypt.MarkFlagRequired("file")
 
-	rootCmd.AddCommand(CmdDir)
+	rootCmd.AddCommand(CmdEncrypt)
 }

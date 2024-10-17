@@ -12,7 +12,6 @@ import (
 
 // reading a single file
 func ReadFile(path string) ([]byte, error) {
-	fmt.Println("caca prout")
 	if _, err := os.Stat(path); err != nil {
 		if os.IsNotExist(err) {
 			fmt.Println("[!] ERROR : file do not exist")
@@ -24,7 +23,6 @@ func ReadFile(path string) ([]byte, error) {
 	//reading file
 	fileContent, err := os.ReadFile(path)
 	if err != nil {
-		fmt.Println("test")
 		return nil, err
 	}
 
@@ -60,21 +58,15 @@ func LoadRSAPublicKeyFromPEM(fileName string) (*rsa.PublicKey, error) {
 		return nil, err
 	}
 
-	fmt.Println("caca")
-
 	block, _ := pem.Decode(pubPEM)
 	if block == nil || block.Type != "PUBLIC KEY" {
 		return nil, fmt.Errorf("non valid public key")
 	}
 
-	fmt.Println("caca0")
-
 	pubKey, err := x509.ParsePKIXPublicKey(block.Bytes)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing public key: %v", err)
 	}
-
-	fmt.Println("caca1")
 
 	rsaPubKey, ok := pubKey.(*rsa.PublicKey)
 	if !ok {
@@ -82,6 +74,49 @@ func LoadRSAPublicKeyFromPEM(fileName string) (*rsa.PublicKey, error) {
 	}
 
 	return rsaPubKey, nil
+}
+
+// loading private key
+func LoadRSAPrivateKeyFromPEM(fileName string) (*rsa.PrivateKey, error) {
+	rootPath, err := GetRootPath("go.mod")
+	if err != nil {
+		return nil, err
+	}
+
+	keyFolder := filepath.Join(rootPath, "data/keys")
+
+	privPEM, err := ReadFile(filepath.Join(keyFolder, "private.pem"))
+	if err != nil {
+		return nil, err
+	}
+
+	block, _ := pem.Decode(privPEM)
+	if block == nil {
+		return nil, err
+	}
+	if block.Type != "PRIVATE KEY" && block.Type != "RSA PRIVATE KEY" {
+		return nil, err
+	}
+
+	var privKey *rsa.PrivateKey
+	if block.Type == "PRIVATE KEY" {
+		parsedKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+		if err != nil {
+			return nil, err
+		}
+		var ok bool
+		if privKey, ok = parsedKey.(*rsa.PrivateKey); !ok {
+			return nil, err
+		}
+	} else {
+		var err error
+		privKey, err = x509.ParsePKCS1PrivateKey(block.Bytes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return privKey, nil
 }
 
 // building path for new encrypted file

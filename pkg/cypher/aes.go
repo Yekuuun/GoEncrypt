@@ -43,3 +43,52 @@ func EncryptAESKeyWithRSA(publicKey *rsa.PublicKey, aesKey []byte) ([]byte, erro
 	}
 	return encryptedKey, nil
 }
+
+func DecryptAES(aesKey, nonce, ciphertext []byte) ([]byte, error) {
+	block, err := aes.NewCipher(aesKey)
+	if err != nil {
+		return nil, err
+	}
+
+	gcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return nil, err
+	}
+
+	plaintext, err := gcm.Open(nil, nonce, ciphertext, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return plaintext, nil
+}
+
+// decrypt a single file.
+func DecryptFile(encryptedFilePath, privateKeyPath string) ([]byte, error) {
+	encryptedData, err := utils.ReadFile(encryptedFilePath)
+	if err != nil {
+		return nil, err
+	}
+
+	rsaPrivateKey, err := utils.LoadRSAPrivateKeyFromPEM(privateKeyPath)
+	if err != nil {
+		return nil, err
+	}
+
+	aesKeySize := rsaPrivateKey.Size()
+	encryptedAESKey := encryptedData[:aesKeySize]
+	nonce := encryptedData[aesKeySize : aesKeySize+12]
+	ciphertext := encryptedData[aesKeySize+12:]
+
+	aesKey, err := rsa.DecryptOAEP(sha256.New(), rand.Reader, rsaPrivateKey, encryptedAESKey, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	plaintext, err := DecryptAES(aesKey, nonce, ciphertext)
+	if err != nil {
+		return nil, err
+	}
+
+	return plaintext, nil
+}

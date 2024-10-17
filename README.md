@@ -32,4 +32,4 @@ GoEncrypt use RSA & AES cyphering methods for maximal security using process as 
 
 **NOTE :**
 
-This project is very simple & contains base features for dev learning.
+This project is very simple & contains base features for learning GO lang.

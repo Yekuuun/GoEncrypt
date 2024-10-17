@@ -23,6 +23,8 @@ var MainContext context.Context
 
 // starting app.
 func Execute() {
+	utils.PrintBanner()
+
 	//intial check.
 	init, err := InitialConfig()
 	if err != nil || !init {
@@ -60,6 +62,8 @@ func Execute() {
 		// fmt.Println(err)
 		os.Exit(1)
 	}
+
+	fmt.Printf("\n\n")
 }
 
 func InitialConfig() (bool, error) {

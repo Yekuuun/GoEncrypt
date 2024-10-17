@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"GoEncrypt/pkg/keys"
 	"GoEncrypt/pkg/utils"
 	"context"
 	"errors"
@@ -25,7 +26,8 @@ func Execute() {
 	//intial check.
 	init, err := InitialConfig()
 	if err != nil || !init {
-		fmt.Println("error loading initial config")
+		fmt.Println("\n[ERROR] loading initial config")
+		keys.CleanKeys()
 		os.Exit(1)
 	}
 
@@ -67,8 +69,25 @@ func InitialConfig() (bool, error) {
 	}
 
 	if !containsKeys {
-		//generating keys + displaying private RSA.
+		fmt.Println("It seems, to be your first time using GoEncrypt ----> Generating new pair of keys.")
+
+		//generating keys.
+		rsaKeys, err := keys.GenerateRSAKeys(2048)
+		if err != nil {
+			return false, err
+		}
+
+		//saving keys.
+		errSaveKeys := keys.AddKeysToFile(rsaKeys, &rsaKeys.PublicKey)
+		if errSaveKeys != nil {
+			return false, errSaveKeys
+		}
+
+		fmt.Println("\n------------------------------------------")
+		fmt.Println("Keys successfuly generated in /data/keys !")
+
 		return true, nil
+
 	} else {
 		return true, nil
 	}

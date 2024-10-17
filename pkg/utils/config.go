@@ -48,5 +48,5 @@ func ContainsKeys() (bool, error) {
 		return false, errors.New("unable to read dir content")
 	}
 
-	return len(files) == 0, nil
+	return !(len(files) == 0), nil
 }

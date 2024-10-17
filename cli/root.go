@@ -1,7 +1,9 @@
 package cli
 
 import (
+	"GoEncrypt/pkg/utils"
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"os/signal"
@@ -20,6 +22,13 @@ var MainContext context.Context
 
 // starting app.
 func Execute() {
+	//intial check.
+	init, err := InitialConfig()
+	if err != nil || !init {
+		fmt.Println("error loading initial config")
+		os.Exit(1)
+	}
+
 	var cancel context.CancelFunc
 	MainContext, cancel = context.WithCancel(context.Background())
 	defer cancel()
@@ -31,8 +40,6 @@ func Execute() {
 		signal.Stop(signalChan)
 		cancel()
 	}()
-
-	//base root check => first use ?
 
 	go func() {
 		select {
@@ -50,5 +57,19 @@ func Execute() {
 		// aren't automatically outputted.
 		// fmt.Println(err)
 		os.Exit(1)
+	}
+}
+
+func InitialConfig() (bool, error) {
+	containsKeys, err := utils.ContainsKeys()
+	if err != nil {
+		return false, errors.New("error append")
+	}
+
+	if !containsKeys {
+		//generating keys + displaying private RSA.
+		return true, nil
+	} else {
+		return true, nil
 	}
 }

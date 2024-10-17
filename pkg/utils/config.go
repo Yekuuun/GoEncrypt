@@ -9,7 +9,7 @@ import (
 
 // Printing main banner.
 func PrintBanner() {
-	fmt.Printf("\n\n\n")
+	fmt.Printf("\n")
 
 	blue := "\033[34m"
 	reset := "\033[0m"

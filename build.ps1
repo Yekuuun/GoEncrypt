@@ -28,35 +28,15 @@ function BuildCode {
     }
 }
 
-# Fonction pour exécuter les tests
-function RunTests {
-    Write-Host "Execution des tests..."
-    & go test ./...
-
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "Tous les tests ont reussi."
-    } else {
-        Write-Host "Des tests ont echoue."
-        exit $LASTEXITCODE
-    }
-}
-
 # Menu pour choisir l'action
 Write-Host "Que souhaitez vous faire ?"
 Write-Host "1. Construire le projet"
-Write-Host "2. Executer les tests"
-Write-Host "3. Construire le projet et executer les tests"
-$choice = Read-Host "Entrez votre choix (1/2/3)"
+$choice = Read-Host "Entrez votre choix"
 
 switch ($choice) {
     1 { BuildCode }
-    2 { RunTests }
-    3 { 
-        BuildCode 
-        RunTests 
-    }
     default {
-        Write-Host "Choix invalide. Veuillez entrer 1, 2 ou 3."
+        Write-Host "Choix invalide. Veuillez entrer une proposition valide"
         exit 1
     }
 }

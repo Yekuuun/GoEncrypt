@@ -74,7 +74,7 @@ func InitialConfig() (bool, error) {
 	}
 
 	if !containsKeys {
-		fmt.Println("It seems, to be your first time using GoEncrypt ----> Generating new pair of keys.")
+		fmt.Println("\nIt seems, to be your first time using GoEncrypt ----> Generating new pair of keys.")
 
 		//generating keys.
 		rsaKeys, err := keys.GenerateRSAKeys(2048)

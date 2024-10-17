@@ -22,7 +22,7 @@ func RunDecrypt(cmd *cobra.Command, args []string) error {
 	}
 
 	fmt.Println("\n------------------------")
-	fmt.Printf("Deciphering file %s", filePath)
+	fmt.Printf("Deciphering file %s \n", filePath)
 
 	dir := filepath.Dir(filePath)
 	ext := filepath.Ext(filePath) // Extraire l'extension du fichier d'entrée

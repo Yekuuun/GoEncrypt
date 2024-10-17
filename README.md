@@ -1,12 +1,12 @@
 ```
 
-          ____       _____                             _   
-         / ___| ___ | ____|_ __   ___ _ __ _   _ _ __ | |_ 
-        | |  _ / _ \|  _| | '_ \ / __| '__| | | | '_ \| __|
-        | |_| | (_) | |___| | | | (__| |  | |_| | |_) | |_ 
-         \____|\___/|_____|_| |_|\___|_|   \__, | .__/ \__|
-                                           |___/|_|
-        ---simple cli file encryption tool written in GO---
+                    ____       _____                             _   
+                   / ___| ___ | ____|_ __   ___ _ __ _   _ _ __ | |_ 
+                  | |  _ / _ \|  _| | '_ \ / __| '__| | | | '_ \| __|
+                  | |_| | (_) | |___| | | | (__| |  | |_| | |_) | |_ 
+                   \____|\___/|_____|_| |_|\___|_|   \__, | .__/ \__|
+                                                     |___/|_|
+                  ---simple cli file encryption tool written in GO---
 
 ```
 
@@ -26,10 +26,8 @@ GoEncrypt use RSA & AES cyphering methods for maximal security using process as 
 
 <img src="https://github.com/Yekuuun/GoEncrypt/blob/main/assets/cyphering.png"></img>
 
-<img src="https://github.com/Yekuuun/GoEncrypt/blob/main/assets/uncyphering.png"></img>
-
 ---
 
 **NOTE :**
 
-This project is very simple & contains base features for learning GO lang.
+**This project is very simple & contains base features for learning GO lang.**

@@ -1,6 +1,9 @@
 package cli
 
 import (
+	"GoEncrypt/pkg/cypher"
+	"GoEncrypt/pkg/utils"
+	"crypto/rand"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -8,14 +11,45 @@ import (
 
 var CmdDir *cobra.Command
 
-func runEncryption(cmd *cobra.Command, args []string) error {
+// running file encryption
+func RunEncryption(cmd *cobra.Command, args []string) error {
 	filePath, err := cmd.Flags().GetString("file")
 	if err != nil {
 		return fmt.Errorf("[!] ERROR : no file path founded")
 	}
 
-	fmt.Println(filePath)
+	aesKey := make([]byte, 32)
+	if _, err := rand.Read(aesKey); err != nil {
+		return fmt.Errorf("[!] ERROR : error on AES key generation")
+	}
 
+	nonce, ciphertext, err := cypher.EncryptAES(filePath, aesKey)
+	if err != nil {
+		return fmt.Errorf("[!] ERROR : error on cyphering")
+	}
+
+	publicKey, err := utils.LoadRSAPublicKeyFromPEM("public.pem")
+	if err != nil {
+		return fmt.Errorf("[!] ERROR : error on loading keys")
+	}
+
+	encryptedAES, err := cypher.EncryptAESKeyWithRSA(publicKey, aesKey)
+	if err != nil {
+		return fmt.Errorf("[!] ERROR : error for aes key encryption")
+	}
+
+	outputFilePath, err := utils.BuildEncryptionFileNamePath(filePath)
+	if err != nil {
+		return fmt.Errorf("[!] ERROR : error building new encrypted file")
+	}
+
+	err = utils.SaveEncryptedData(outputFilePath, encryptedAES, nonce, ciphertext)
+	if err != nil {
+		return fmt.Errorf("[!] ERROR : error uploading new encrypted file")
+	}
+
+	fmt.Println("\n------------------------")
+	fmt.Println("File succesffuly encrypted")
 	return nil
 }
 
@@ -23,7 +57,7 @@ func init() {
 	CmdDir = &cobra.Command{
 		Use:   "encrypt",
 		Short: "Encrypt a given file using it's path",
-		RunE:  runEncryption,
+		RunE:  RunEncryption,
 	}
 
 	CmdDir.Flags().StringP("file", "f", "", "Path to the file to encrypt")

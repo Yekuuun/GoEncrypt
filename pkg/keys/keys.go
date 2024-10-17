@@ -29,7 +29,7 @@ func SavePrivateKey(privatekey *rsa.PrivateKey, path string) error {
 	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privatekey)
 	privateKeyPEM := pem.EncodeToMemory(
 		&pem.Block{
-			Type:  "RSA PRIVATE KEY",
+			Type:  "PRIVATE KEY",
 			Bytes: privateKeyBytes,
 		},
 	)
@@ -44,7 +44,7 @@ func SavePublicKeyToFile(publicKey *rsa.PublicKey, path string) error {
 	}
 	publicKeyPEM := pem.EncodeToMemory(
 		&pem.Block{
-			Type:  "RSA PUBLIC KEY",
+			Type:  "PUBLIC KEY",
 			Bytes: publicKeyBytes,
 		},
 	)

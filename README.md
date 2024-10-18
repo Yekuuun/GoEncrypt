@@ -24,7 +24,7 @@ GoEncrypt use RSA & AES cyphering methods for maximal security using process as 
 
 ## Assets
 
-<img src="https://github.com/Yekuuun/GoEncrypt/blob/main/assets/cyphering.png"></img>
+<img src="https://github.com/Yekuuun/GoEncrypt/blob/main/assets/cyphering-file.png"></img>
 
 ---
 
